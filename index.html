@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian OSN MATEMATIKA - KKG Ngasem</title>
+    <style>
+        :root { 
+            --primary: #4e73df; 
+            --success: #1cc88a; 
+            --danger: #e74a3b; 
+            --bg: #f8f9fc; 
+            --dark: #5a5c69; 
+            --secondary: #858796; 
+        }
+
+        /* Perbaikan CSS Logo agar rapi di tengah */
+        .logo-header {
+            display: block;
+            margin: 0 auto 15px auto;
+            max-width: 100px;
+            height: auto;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); display: flex; justify-content: center; padding: 20px; margin: 0; }
+        .quiz-container { background: white; width: 100%; max-width: 800px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; }
+        .hidden { display: none !important; }
+        
+        #timer-wrapper { position: absolute; top: 20px; right: 30px; text-align: right; }
+        #timer-display { font-size: 1.1rem; font-weight: bold; color: var(--danger); background: #fff1f0; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--danger); }
+
+        .passage { background: #f1f3f9; border-left: 5px solid var(--primary); padding: 15px; margin-bottom: 20px; line-height: 1.6; font-size: 0.95rem; border-radius: 5px; color: #444; }
+        .question-image { width: 100%; max-width: 400px; height: auto; display: block; margin: 20px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #ddd; }
+        .question-text { font-size: 1.15rem; font-weight: bold; margin-bottom: 20px; color: var(--dark); line-height: 1.6; }
+        
+        .option { display: block; width: 100%; padding: 14px; margin-bottom: 12px; border: 2px solid #eaecf4; border-radius: 10px; background: white; text-align: left; cursor: pointer; transition: 0.2s; font-size: 1rem; }
+        .option:hover { border-color: var(--primary); background: #f8f9ff; }
+        .option.selected { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 8px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .nav-num { padding: 10px 0; border: 1px solid #ddd; border-radius: 5px; text-align: center; cursor: pointer; font-size: 0.85rem; font-weight: bold; background: white; color: #888; }
+        .nav-num.current { border-color: var(--primary); background: #f0f4ff; color: var(--primary); border-width: 2px; }
+        .nav-num.answered { background: var(--secondary); color: white; border-color: var(--secondary); }
+        .nav-num.current.answered { background: var(--primary); color: white; }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        .btn { flex: 2; padding: 15px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { flex: 1; background: var(--secondary); color: white; }
+        input#username { width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 2px solid #ddd; font-size: 1rem; box-sizing: border-box; }
+    </style>
+</head>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSK Bahasa Inggris 2026</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #3498db;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; }
+        
+        .quiz-container { 
+            max-width: 800px; 
+            margin: auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+        }
+
+        .logo-header { 
+            display: block; 
+            margin: 0 auto 15px; 
+            max-width: 100px; 
+            height: auto; 
+        }
+
+        /* Ukuran logo lebih kecil saat mengerjakan soal agar hemat ruang */
+        #quiz-screen .logo-header { max-width: 70px; margin-bottom: 10px; }
+
+        hr { border: 0; height: 1px; background: #ddd; margin: 20px 0; }
+        .hidden { display: none; }
+
+        #timer-wrapper { 
+            background: var(--primary); 
+            color: white; 
+            padding: 10px; 
+            border-radius: 8px; 
+            text-align: center; 
+            font-size: 1.2rem; 
+            font-weight: bold; 
+            margin-bottom: 20px;
+        }
+
+        .passage { 
+            background: #f9f9f9; 
+            padding: 15px; 
+            border-left: 5px solid var(--accent); 
+            margin-bottom: 20px; 
+            line-height: 1.6;
+        }
+
+        .question-image { 
+            display: block; 
+            max-width: 100%; 
+            height: auto; 
+            margin: 15px auto; 
+            border-radius: 8px; 
+        }
+
+        .question-text { font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; color: var(--primary); }
+
+        .option { 
+            display: block; 
+            width: 100%; 
+            text-align: left; 
+            padding: 12px 15px; 
+            margin-bottom: 10px; 
+            border: 2px solid #eee; 
+            border-radius: 8px; 
+            background: white; 
+            cursor: pointer; 
+            transition: 0.2s;
+        }
+
+        .option:hover { background: #f0f7ff; border-color: var(--accent); }
+        .option.selected { background: var(--accent); color: white; border-color: var(--accent); }
+
+        .btn-group { display: flex; justify-content: space-between; margin-top: 30px; gap: 10px; }
+        .btn { padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-secondary { background: #95a5a6; color: white; }
+
+        .nav-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(35px, 1fr)); 
+            gap: 8px; 
+            margin-top: 30px; 
+            padding-top: 20px; 
+            border-top: 1px solid #eee;
+        }
+
+        .nav-num { 
+            height: 35px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 0.9rem;
+        }
+
+        .nav-num.answered { background: var(--success); color: white; border-color: var(--success); }
+        .nav-num.current { border: 2px solid var(--primary); font-weight: bold; transform: scale(1.1); }
+
+        input[type="text"] { 
+            width: 100%; 
+            padding: 12px; 
+            margin-bottom: 15px; 
+            border: 1px solid #ccc; 
+            border-radius: 6px; 
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="login-screen">
+        <img src="https://awsimages.detik.net.id/community/media/visual/2023/05/02/lambang-tut-wuri-handayani.png?w=700&q=90" class="logo-header" alt="Logo">
+        <h2 style="text-align:center; color: var(--primary); margin-top: 0;">SELEKSI OSK MATEMATIKA TAHUN 2026</h2>
+        <h4 style="text-align:center; color: var(--secondary); margin-top:-10px;">KKG KELAS KECAMATAN NGASEM</h4>
+        <hr>
+        <p style="text-align:center;">Waktu: <b>20 Menit</b> | Total: <b>35 Soal</b></p>
+        <input type="text" id="username" placeholder="Masukkan Nama Lengkap Anda...">
+        <button class="btn btn-primary" style="width:100%" onclick="startQuiz()">Mulai Ujian</button>
+    </div>
+
+    <div id="quiz-screen" class="hidden">
+        <img src="https://awsimages.detik.net.id/community/media/visual/2023/05/02/lambang-tut-wuri-handayani.png?w=700&q=90" class="logo-header" alt="Logo">
+        
+        <div id="timer-wrapper"><div id="timer-display">20:00</div></div>
+        <div id="progress" style="margin-bottom:15px; font-weight:bold; color: var(--primary);"></div>
+        
+        <div id="passage-box" class="passage hidden"></div>
+        <img id="image-box" class="question-image hidden" src="">
+        <div id="question-box" class="question-text"></div>
+        <div id="options-box"></div>
+        
+        <div class="btn-group">
+            <button id="prev-btn" class="btn btn-secondary" onclick="prevQuestion()">Kembali</button>
+            <button id="next-btn" class="btn btn-primary" onclick="nextQuestion()">Lanjut</button>
+        </div>
+        <div class="nav-grid" id="nav-grid"></div>
+    </div>
+
+    <div id="result-screen" class="hidden" style="text-align:center">
+        <img src="https://awsimages.detik.net.id/community/media/visual/2023/05/02/lambang-tut-wuri-handayani.png?w=700&q=90" class="logo-header" alt="Logo">
+        <h2>Selesai! Skor Anda:</h2>
+        <h1 id="final-score" style="font-size: 5rem; color: var(--success);">0</h1>
+        <p id="status-upload" style="font-weight:bold;"></p>
+        <button class="btn btn-primary" onclick="location.reload()">Selesai / Keluar</button>
+    </div>
+</div>
+
+<script>
+    const DATABASE_URL = "https://script.google.com/macros/s/AKfycbxnRqnezVoe-watHBHKDKDkZe23b5_ScdG-gX4iPrGQA6fQnwXyo8-mDJuAtPsT3bA6fg/exec";
+
+const quizData = [
+    { q: "Diketahui pola: ■ ♦ ♦ ● ▲ ▲ ▲ ■ ♦ ♦ ● ▲ ▲ ▲. Gambar yang akan tampak pada urutan ke-100 adalah...", options: {a: "■", b: "♦", c: "●", d: "▲"}, ans: "b" },
+    { q: "Jumlah umur ayah dan ibu 10 tahun lalu adalah 75 tahun. Perbandingan umur mereka 8:7. <br>Selisih umur mereka sekarang adalah....", options: {a: "10 tahun", b: "8 tahun", c: "5 tahun", d: "2 tahun"}, ans: "c" },
+    { q: "Volume bangun ruang tersebut (Sisi 55 cm) adalah ....", image: "https://media.quizizz.com/_mdserver/main/media/resource/gs/quizizz-media/quizzes/e5478774-110d-48be-a05a-6645ee8ccc2c-v2", options: {a: "166.575 cm³", b: "166.375 cm³", c: "166.507 cm³", d: "166.675 cm³"}, ans: "b" },
+    { q: "Hasil ujian matematika di suatu kelas yang terdiri dari 20 siswa berada pada interval 56 – 100. Rata-rata seluruh siswa di kelas tersebut adalah 68. Sebanyak 3 siswa mengikuti remedial dengan nilai maksimum 75. <br>Rata-rata tertinggi setelah remedial yang mungkin untuk kelas tersebut adalah ….", options: {a: "70,65", b: "70,75", c: "70,85", d: "70,95"}, ans: "c" },
+    { q: "Panitia pentas seni membutuhkan 2 orang bagian perlengkapan dan 2 orang bagian sekretariat. Jika terdapat 3 calon anggota bagian perlengkapan dan 4 calon anggota bagian sekretariat, maka banyak susunan anggota berbeda yang dapat dipilih adalah ….", options: {a: "9", b: "18", c: "36", d: "72"}, ans: "b" },
+    { q: "Ali berenang 10 hari, Budi 15 hari, Amir 20 hari sekali. Ketiga sama-sama berenang pertama kali pada tanggal 20 Februari 2022, maka mereka akan berenang bersama pada tanggal ...", options: {a: "20 Maret 2022", b: "21 Maret 2022", c: "20 April 2022", d: "21 April 2022"}, ans: "d" },
+    { q: "Bapak memberikan bantuan berupa 96 kg beras, 80 bungkus mie instan, dan 64 kemasan minyak goreng kepada sejumlah orang yang membutuhkan. Jika setiap orang menerima bantuan sama banyak dan merata, Berapa orang paling banyak penerima bantuan ...", options: {a: "4", b: "8", c: "12", d: "16"}, ans: "d" },
+    { q: "(485 - (-253)) - n = 85. Nilai n adalah ...", options: {a: "713", b: "653", c: "687", d: "-650"}, ans: "b" },
+    { q: "A car departs at 07.45 from Pandeglang towards Balaraja. A trip taken for 1 hour 30 minutes. The distance between Balaraja and Pandeglang is 60 km. The average speed of the car is ...", options: {a: "35 Km/h", b: "40 Km/h", c: "55 Km/h", d: "60 Km/h"}, ans: "b" },
+    { q: "Jika suatu kubus panjang sisinya 15 cm. Volume kubus tersebut adalah ….", options: {a: "2.375 cm³", b: "3.275 cm³", c: "3.375 cm³", d: "7.375 cm³"}, ans: "c" },
+    { q: "Bu Nani memanen 200 kg tomat. Sebanyak 4/5 bagian dijual. Banyak tomat yang dijual adalah … kg.", options: {a: "100", b: "140", c: "160", d: "180"}, ans: "c" },
+    { q: "Jarak kota A ke kota B pada peta 7 cm. Kota C tepat berada di tengah antara kota A dan B. Jika skala peta tersebut 1:1.500.000, maka jarak kota C ke kota B sebenarnya adalah ….", options: {a: "25,5 km", b: "52,5 km", c: "55,2 km", d: "55,5 km"}, ans: "b" },
+    { q: "Nilai ulangan matematika Mia adalah 60, 70, 75, 80, 80, 90, 70. Nilai rata-ratanya adalah …", options: {a: "74", b: "74,5", c: "75", d: "75,5"}, ans: "c" },
+    { q: "Sekelompok tantara mampu melakukan baris-berbaris sejauh 25 Km pada saat tidak hujan dan 20 Km pada saat hujan. Jika mereka melakukan baris-berbaris itu sepanjang 480 Km selama 20 hari, Ada berapa jumlah hari hujan yang mereka lalui?", options: {a: "6 hari", b: "5 hari", c: "4 hari", d: "3 hari"}, ans: "c" },
+    { q: "Jika A + B = 12, B + C = 10, <br>dan C + D = 16, maka A + D = …", options: {a: "16", b: "17", c: "18", d: "19"}, ans: "c" },
+    { q: "Berapakah besar sudut terkecil yang dibentuk jarum jam pada pukul 04.15 ?", options: {a: "32°", b: "35°", c: "37,5°", d: "44,5°"}, ans: "c" },
+    { q: "Lina lomba tiap 6 hari, Tia tiap 8 hari. Jika mereka ikut lomba bersama hari ini, mereka bertemu lagi dalam … hari.", options: {a: "24", b: "30", c: "36", d: "48"}, ans: "a" },
+    { q: "Sebuah bilangan dikalikan 4 lalu dikurangi 6 hasilnya 18. Bilangan itu adalah …", options: {a: "5", b: "6", c: "7", d: "8"}, ans: "b" },
+    { q: "Jumlah umur ayah dan anak 50 tahun. Umur ayah 4 kali umur anak. Umur anak adalah …", options: {a: "8", b: "10", c: "12", d: "15"}, ans: "b" },
+    { q: "Hasil dari -12 + (-7) - (-5) adalah …", options: {a: "-14", b: "-15", c: "-20", d: "-10"}, ans: "a" },
+    { q: "Sekeranjang apel beratnya 9000 gram. Berapa kilogram berat apel tersebut ….", options: {a: "9 kg", b: "90 kg", c: "900 kg", d: "0,9 kg"}, ans: "a" },
+    { q: "Bangun datar dengan 4 sisi sama panjang dan sudut berhadapan sama besar adalah …", options: {a: "persegi", b: "layang-layang", c: "belah ketupat", d: "jajargenjang"}, ans: "c" },
+    { q: "Kakak ke pasar membeli 4 kantong gula masing-masing memiliki berat 2,5 kg. Jumlah gula yang dibeli kakak adalah…. kg.", options: {a: "10,0", b: "72,5", c: "45,5", d: "4,55"}, ans: "a" },
+    { q: "Bilangan desimal dari pecahan 3/4 adalah ….", options: {a: "0,25", b: "0,75", c: "0,50", d: "0,90"}, ans: "b" },
+    { q: "Jika kemarin hari Minggu, maka 2020 hari yang akan datang, jatuh pada hari .....", options: {a: "Rabu", b: "Kamis", c: "Jum'at", d: "Sabtu"}, ans: "c" },
+    { q: "Harga 3 buah pensil adalah Rp 3.750, harga 4 buah buku adalah Rp 9.000, dan harga 5 buah penghapus adalah Rp 5.500. Pak Rahmat membeli 2 pensil, 3 buku, dan 1 penghapus. Jika ia membayar dengan uang Rp 20.000, maka berapakah uang kembalian yang ia terima?", options: {a: "Rp9.150", b: "Rp9.650", c: "Rp9.350", d: "Rp10.350"}, ans: "b" },
+    { passage: "<b>Berikut ini adalah komposisi bahan untuk membuat 25 buah pempek lenjer kecil :</b> <br>1. Ikan gabus giling = 500 gram 2. Tepung sagu = 250 gram 3. Telur = 1 butir 4. Garam halus = 1 sdt 5. Gula = 1 sdt 6. Air = 80 ml Keterangan: sdt = sendok teh Perbandingan komposisi ikan gabus giling dan tepung sagu adalah 2 : 1. Saat ini, tepung sagu yang tersedia hanya 150 gram.", q: "Jika ingin membuat pempek dengan citarasa yang sama, banyaknya ikan gabus giling yang dibutuhkan adalah … gram.", options: {a: "300", b: "350", c: "400", d: "550"}, ans: "a" },
+    { q: "Jumlah keliling suatu persegi dan suatu persegi panjang sama dengan tiga kali keliling suatu segitiga sama sisi. Diketahui panjang sisi persegi dan segitiga sama sisi berturut-turut adalah 12 cm dan 10 cm. Jika lebar persegi panjang adalah 9 cm, maka perbandingan lebar dan panjang dari persegi panjang adalah ....", options: {a: "2:3", b: "1:2", c: "1:4", d: "3:4"}, ans: "d" },
+    { q: "Sepeda sepeda motor berangkat dari Kota Yogyakarta ke Kota Semarang dengan kecepatan 80 km/jam. Pada saat yang sama, sebuah mobil bergerak dari Kota Semarang ke Kota Yogyakarta dengan kecepatan 100 km/jam. Sepeda motor itu memerlukan waktu 1,2 jam lebih lama daripada mobil untuk menyelesaikan perjalanannya. <br>Berapa jarak Kota Semarang dari Kota Yogyakarta?", options: {a: "440 km", b: "460 km", c: "480 km", d: "500 km"}, ans: "c" },
+    { q: "Berdasarkan soal sebelumnya, berapa waktu yang diperlukan bagi kedua kendaraan itu untuk bertemu?", options: {a: "2 jam 10 mnt", b: "2 jam 30 mnt", c: "2 jam 20 mnt", d: "2 jam 40 mnt"}, ans: "d" },
+    { q: "JIka barisan bilangan berikut adalah barisan bilangan bulat positif berurutan yang dihilangkan semua bilangan kelipatan tiga : 1, 2, 4, 5, 7, 8, ..., maka suku ke-67 bilangan tersebut adalah . . . .", options: {a: "92", b: "62", c: "86", d: "100"}, ans: "d" },
+    { q: "Jika dua buah dadu digulingkan 36 kali, maka peluang memperoleh mata dadu berjumlah 7 adalah ...", options: {a: "6 kali", b: "8 kali", c: "10 kali", d: "12 kali"}, ans: "a" },
+    { q: "Hasil dari 400 : 20 x (-3) adalah ….", options: {a: "60", b: "50", c: "-45", d: "-60"}, ans: "d" },
+    { q: "Ditentukan huruf berbeda untuk menyatakan bilangan asli yang berbeda. Nilai sebuah kata ditentukan oleh hasil perkalian bilangan-bilangan yang diwakili huruf-hurufnya. Diketahui A = 17, U= 1 dan K= 11 sehingga AKU = 187.Jika nilai kata BUKU = 77, OBAT= 714 dan KUNO = 165 nilai kata BATUK adalah ….", options: {a: "1.155", b: "2.618", c: "510", d: "770"}, ans: "b" },
+    { q: "Jumlah umur Ahmad dan Badrun adalah 31. Jumlah umur Badrun dan Candra adalah 37. Jumlah umur Candra dan Ahmad adalah 28. Jumlah umur Ahmad, Badrun, dan Candra adalah ...", options: {a: "55 tahun", b: "52 tahun", c: "48 tahun", d: "96 tahun"}, ans: "c" }
+];
+
+    let currentIdx = 0, userName = "", timeLeft = 20 * 60;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let timerInterval;
+
+    function startQuiz() {
+        userName = document.getElementById('username').value.trim();
+        if(!userName) return alert("Silakan isi nama terlebih dahulu!");
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.remove('hidden');
+        startTimer();
+        initGrid();
+        loadQuestion();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            let min = Math.floor(timeLeft / 60);
+            let sec = timeLeft % 60;
+            document.getElementById('timer-display').innerText = `${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+            if(timeLeft <= 0) { clearInterval(timerInterval); alert("Waktu habis!"); showResult(); }
+        }, 1000);
+    }
+
+    function initGrid() {
+        const grid = document.getElementById('nav-grid');
+        grid.innerHTML = "";
+        quizData.forEach((_, i) => {
+            const el = document.createElement('div');
+            el.className = 'nav-num';
+            el.id = `nav-${i}`;
+            el.innerText = i + 1;
+            el.onclick = () => { currentIdx = i; loadQuestion(); };
+            grid.appendChild(el);
+        });
+    }
+
+    function loadQuestion() {
+        const data = quizData[currentIdx];
+        document.getElementById('progress').innerText = `SOAL ${currentIdx + 1} DARI ${quizData.length}`;
+        
+        const iBox = document.getElementById('image-box');
+        if(data.image && data.image !== "") {
+            iBox.src = data.image;
+            iBox.classList.remove('hidden');
+        } else {
+            iBox.classList.add('hidden');
+            iBox.src = "";
+        }
+
+        const pBox = document.getElementById('passage-box');
+        if(data.passage) { pBox.innerHTML = data.passage; pBox.classList.remove('hidden'); }
+        else { pBox.classList.add('hidden'); }
+
+        document.getElementById('question-box').innerHTML = data.q;
+
+        const oBox = document.getElementById('options-box');
+        oBox.innerHTML = "";
+        for(let key in data.options) {
+            const btn = document.createElement('button');
+            btn.className = 'option' + (userAnswers[currentIdx] === key ? ' selected' : '');
+            btn.innerHTML = `<strong>${key.toUpperCase()}.</strong> ${data.options[key]}`;
+            btn.onclick = () => {
+                userAnswers[currentIdx] = key;
+                document.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                updateGridStyles();
+            };
+            oBox.appendChild(btn);
+        }
+
+        document.getElementById('prev-btn').style.visibility = (currentIdx === 0) ? 'hidden' : 'visible';
+        document.getElementById('next-btn').innerText = (currentIdx === quizData.length - 1) ? "Selesai" : "Lanjut";
+        updateGridStyles();
+    }
+
+    function updateGridStyles() {
+        quizData.forEach((_, i) => {
+            const el = document.getElementById(`nav-${i}`);
+            if(el) {
+                el.classList.remove('current', 'answered');
+                if(i === currentIdx) el.classList.add('current');
+                if(userAnswers[i] !== null) el.classList.add('answered');
+            }
+        });
+    }
+
+    function nextQuestion() {
+        if(currentIdx < quizData.length - 1) { currentIdx++; loadQuestion(); }
+        else { if(confirm("Kumpulkan jawaban sekarang?")) { clearInterval(timerInterval); showResult(); } }
+    }
+
+    function prevQuestion() { if(currentIdx > 0) { currentIdx--; loadQuestion(); } }
+
+    function showResult() {
+        document.getElementById('quiz-screen').classList.add('hidden');
+        document.getElementById('result-screen').classList.remove('hidden');
+
+        let correctCount = 0;
+        userAnswers.forEach((ans, i) => { if(ans === quizData[i].ans) correctCount++; });
+        let score = Math.round((correctCount / quizData.length) * 100);
+        document.getElementById('final-score').innerText = score;
+
+        if(DATABASE_URL && DATABASE_URL.includes("script.google.com")) {
+            document.getElementById('status-upload').innerText = "⏳ Sedang mengirim nilai...";
+            fetch(DATABASE_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: userName, score: score })
+            })
+            .then(() => {
+                document.getElementById('status-upload').innerText = "✅ Nilai Berhasil Terkirim!";
+                document.getElementById('status-upload').style.color = "var(--success)";
+            })
+            .catch(() => {
+                document.getElementById('status-upload').innerText = "⚠️ Nilai gagal dikirim ke server.";
+                document.getElementById('status-upload').style.color = "var(--danger)";
+            });
+        }
+    }
+</script>
+</body>
+</html>
