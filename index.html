@@ -8,14 +8,16 @@
         :root { --primary: #2c3e50; --secondary: #34495e; --accent: #3498db; --success: #27ae60; --danger: #e74c3c; --light: #ecf0f1; }
         body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; margin: 0; padding: 10px; }
         .quiz-container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .logo-header { display: block; margin: 0 auto 10px; max-width: 70px; height: auto; }
+        
+        /* CSS Logo agar selalu terlihat proposional */
+        .logo-header { display: block; margin: 0 auto 10px; width: 70px; height: auto; }
+        
         .hidden { display: none !important; }
         #timer-wrapper { background: var(--primary); color: white; padding: 10px; border-radius: 8px; text-align: center; font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; }
         .passage { background: #fff9c4; padding: 15px; border-left: 5px solid #fbc02d; margin-bottom: 15px; border-radius: 4px; font-size: 0.95rem; line-height: 1.5; color: #444; }
         .question-image { display: block; max-width: 100%; height: auto; margin: 15px auto; border-radius: 8px; border: 1px solid #ddd; }
         .question-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; color: var(--primary); line-height: 1.4; }
         .option { display: block; width: 100%; text-align: left; padding: 12px; margin-bottom: 10px; border: 2px solid #eee; border-radius: 8px; cursor: pointer; background: white; transition: 0.2s; font-size: 1rem; }
-        .option:hover { background: #f8f9fa; border-color: #ccc; }
         .option.selected { background: var(--accent); color: white; border-color: var(--accent); }
         .btn-group { display: flex; justify-content: space-between; margin-top: 25px; gap: 10px; }
         .btn { padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; flex: 1; font-size: 1rem; }
@@ -33,18 +35,19 @@
 <div class="quiz-container">
     <div id="login-screen">
         <img src="https://awsimages.detik.net.id/community/media/visual/2023/05/02/lambang-tut-wuri-handayani.png?w=700&q=90" class="logo-header">
-        <h2 style="text-align:center; margin-bottom: 5px;">SELEKSI OSK MATEMATIKA</h2>
-        <p style="text-align:center; margin-top:0; color: #666;">KKG KECAMATAN NGASEM 2026</p>
+        <h2 style="text-align:center; margin-bottom: 5px;">SELEKSI OSK MATEMATIKA 2026</h2>
+        <p style="text-align:center; margin-top:0; color: #666;">KKG KECAMATAN NGASEM</p>
         <hr>
-        <label>Nama Lengkap Peserta:</label>
-        <input type="text" id="username" placeholder="Ketik nama sesuai absen...">
-        <button class="btn btn-primary" style="width:100%" onclick="startQuiz()">MULAI UJIAN SEKARANG</button>
+        <label></label>
+        <input type="text" id="username" placeholder="Ketik nama lengkap Anda...">
+        <button class="btn btn-primary" style="width:100%" onclick="startQuiz()">MASUK KE RUANG UJIAN</button>
     </div>
 
     <div id="quiz-screen" class="hidden">
-        <img src="https://awsimages.detik.net.id/community/media/visual/2023/05/02/lambang-tut-wuri-handayani.png?w=700&q=90" class="logo-header" style="max-width: 45px;">
+        <img src="https://awsimages.detik.net.id/community/media/visual/2023/05/02/lambang-tut-wuri-handayani.png?w=700&q=90" class="logo-header">
+        
         <div id="timer-wrapper">Sisa Waktu: <span id="timer-display">20:00</span></div>
-        <div id="progress" style="font-weight:bold; margin-bottom:10px; color: var(--secondary);"></div>
+        <div id="progress" style="font-weight:bold; margin-bottom:10px; color: var(--secondary); text-align:center;"></div>
         
         <div id="passage-box" class="passage hidden"></div>
         <div id="image-container"></div>
@@ -60,20 +63,20 @@
 
     <div id="result-screen" class="hidden" style="text-align:center">
         <img src="https://awsimages.detik.net.id/community/media/visual/2023/05/02/lambang-tut-wuri-handayani.png?w=700&q=90" class="logo-header">
-        <h2>Ujian Telah Selesai!</h2>
-        <p>Halo, <b id="res-name"></b>. Berikut hasil Anda:</p>
+        <h2>Ujian Selesai!</h2>
+        <p>Peserta: <b id="res-name"></b></p>
         <h1 id="final-score" style="font-size: 4.5rem; color: var(--success); margin: 15px 0;">0</h1>
-        <p id="duration-report" style="font-size: 1.1rem;"></p>
-        <div id="status-upload" style="background: #e8f4fd; padding: 10px; border-radius: 8px; margin-top: 20px;">Menyimpan nilai ke server...</div>
+        <p id="duration-report"></p>
+        <div id="status-upload" style="background: #e8f4fd; padding: 10px; border-radius: 8px; margin-top: 20px;">Menyimpan nilai...</div>
         <br>
-        <button class="btn btn-primary" onclick="location.reload()">Refresh / Keluar</button>
+        <button class="btn btn-primary" onclick="location.reload()">Refresh Halaman</button>
     </div>
 </div>
 
 <script>
-    // MASUKKAN URL WEB APP GOOGLE SCRIPT ANDA DI SINI
     const DATABASE_URL = "https://script.google.com/macros/s/AKfycbxSMi58PgvfcjvxOM4QIUNCRQnlxbKq6XP4ImHj9Da4R3JBUJSgSSFg0iapYjIEtLzJaQ/exec";
 
+    // DATABASE 35 SOAL LENGKAP
     const quizData = [
         { q: "Diketahui pola: ■ ♦ ♦ ● ▲ ▲ ▲ ■ ♦ ♦ ● ▲ ▲ ▲. Gambar yang akan tampak pada urutan ke-100 adalah...", options: {a: "■", b: "♦", c: "●", d: "▲"}, ans: "b" },
         { q: "Jumlah umur ayah dan ibu 10 tahun lalu adalah 75 tahun. Perbandingan umur mereka 8:7. <br>Selisih umur mereka sekarang adalah....", options: {a: "10 tahun", b: "8 tahun", c: "5 tahun", d: "2 tahun"}, ans: "c" },
@@ -101,15 +104,15 @@
         { q: "Bilangan desimal dari pecahan 3/4 adalah ….", options: {a: "0,25", b: "0,75", c: "0,50", d: "0,90"}, ans: "b" },
         { q: "Jika kemarin hari Minggu, maka 2020 hari yang akan datang, jatuh pada hari .....", options: {a: "Rabu", b: "Kamis", c: "Jum'at", d: "Sabtu"}, ans: "c" },
         { q: "Harga 3 buah pensil adalah Rp 3.750, harga 4 buah buku adalah Rp 9.000, dan harga 5 buah penghapus adalah Rp 5.500. Pak Rahmat membeli 2 pensil, 3 buku, dan 1 penghapus. Jika ia membayar dengan uang Rp 20.000, maka berapakah uang kembalian yang ia terima?", options: {a: "Rp9.150", b: "Rp9.650", c: "Rp9.350", d: "Rp10.350"}, ans: "b" },
-        { passage: "<b>Berikut ini adalah komposisi bahan untuk membuat 25 buah pempek lenjer kecil :</b> <br>1. Ikan gabus giling = 500 gram 2. Tepung sagu = 250 gram 3. Telur = 1 butir 4. Garam halus = 1 sdt 5. Gula = 1 sdt 6. Air = 80 ml Keterangan: sdt = sendok teh Perbandingan komposisi ikan gabus giling dan tepung sagu adalah 2 : 1. Saat ini, tepung sagu yang tersedia hanya 150 gram.", q: "Jika ingin membuat pempek dengan citarasa yang sama, banyaknya ikan gabus giling yang dibutuhkan adalah … gram.", options: {a: "300", b: "350", c: "400", d: "550"}, ans: "a" },
+        { passage: "<b>INFO RESEP:</b> Untuk membuat 25 buah pempek, dibutuhkan Ikan gabus 500g dan Sagu 250g. Saat ini sagu yang tersedia hanya 150 gram.", q: "Berapakah ikan gabus giling yang dibutuhkan?", options: {a: "300", b: "350", c: "400", d: "550"}, ans: "a" },
         { q: "Jumlah keliling suatu persegi dan suatu persegi panjang sama dengan tiga kali keliling suatu segitiga sama sisi. Diketahui panjang sisi persegi dan segitiga sama sisi berturut-turut adalah 12 cm dan 10 cm. Jika lebar persegi panjang adalah 9 cm, maka perbandingan lebar dan panjang dari persegi panjang adalah ....", options: {a: "2:3", b: "1:2", c: "1:4", d: "3:4"}, ans: "d" },
-        { q: "Sepeda motor berangkat dari Kota Yogyakarta ke Kota Semarang dengan kecepatan 80 km/jam. Pada saat yang sama, sebuah mobil bergerak dari Kota Semarang ke Kota Yogyakarta dengan kecepatan 100 km/jam. Sepeda motor itu memerlukan waktu 1,2 jam lebih lama daripada mobil untuk menyelesaikan perjalanannya. <br>Berapa jarak Kota Semarang dari Kota Yogyakarta?", options: {a: "440 km", b: "460 km", c: "480 km", d: "500 km"}, ans: "c" },
-        { q: "Berdasarkan soal sebelumnya, berapa waktu yang diperlukan bagi kedua kendaraan itu untuk bertemu?", options: {a: "2 jam 10 mnt", b: "2 jam 30 mnt", c: "2 jam 20 mnt", d: "2 jam 40 mnt"}, ans: "d" },
-        { q: "JIka barisan bilangan berikut adalah barisan bilangan bulat positif berurutan yang dihilangkan semua bilangan kelipatan tiga : 1, 2, 4, 5, 7, 8, ..., maka suku ke-67 bilangan tersebut adalah . . . .", options: {a: "92", b: "62", c: "86", d: "100"}, ans: "d" },
+        { q: "Sepeda motor berangkat dari Jogja ke Semarang dengan kecepatan 80 km/jam. Mobil dari Semarang ke Jogja 100 km/jam. Motor perlu waktu 1,2 jam lebih lama dari mobil. Berapa jarak Jogja-Semarang?", options: {a: "440 km", b: "460 km", c: "480 km", d: "500 km"}, ans: "c" },
+        { q: "Berapa waktu yang diperlukan bagi kedua kendaraan itu untuk bertemu?", options: {a: "2 jam 10 mnt", b: "2 jam 30 mnt", c: "2 jam 20 mnt", d: "2 jam 40 mnt"}, ans: "d" },
+        { q: "JIka barisan bilangan berikut dihilangkan semua kelipatan tiga : 1, 2, 4, 5, 7, 8, ..., maka suku ke-67 adalah . . . .", options: {a: "92", b: "62", c: "86", d: "100"}, ans: "d" },
         { q: "Jika dua buah dadu digulingkan 36 kali, maka peluang memperoleh mata dadu berjumlah 7 adalah ...", options: {a: "6 kali", b: "8 kali", c: "10 kali", d: "12 kali"}, ans: "a" },
         { q: "Hasil dari 400 : 20 x (-3) adalah ….", options: {a: "60", b: "50", c: "-45", d: "-60"}, ans: "d" },
-        { q: "Ditentukan huruf berbeda untuk menyatakan bilangan asli yang berbeda. Nilai sebuah kata ditentukan oleh hasil perkalian bilangan-bilangan yang diwakili huruf-hurufnya. Diketahui A = 17, U= 1 dan K= 11 sehingga AKU = 187. Jika nilai kata BUKU = 77, OBAT= 714 dan KUNO = 165 nilai kata BATUK adalah ….", options: {a: "1.155", b: "2.618", c: "510", d: "770"}, ans: "b" },
-        { q: "Jumlah umur Ahmad dan Badrun adalah 31. Jumlah umur Badrun dan Candra adalah 37. Jumlah umur Candra dan Ahmad adalah 28. Jumlah umur Ahmad, Badrun, dan Candra adalah ...", options: {a: "55 tahun", b: "52 tahun", c: "48 tahun", d: "96 tahun"}, ans: "c" }
+        { q: "Diketahui A = 17, U= 1 dan K= 11. Jika BUKU = 77, OBAT= 714 dan KUNO = 165 nilai kata BATUK adalah ….", options: {a: "1.155", b: "2.618", c: "510", d: "770"}, ans: "b" },
+        { q: "Jumlah umur Ahmad dan Badrun 31. Badrun dan Candra 37. Candra dan Ahmad 28. Berapa jumlah umur mereka bertiga?", options: {a: "55 tahun", b: "52 tahun", c: "48 tahun", d: "96 tahun"}, ans: "c" }
     ];
 
     let currentIdx = 0, userName = "", timeLeft = 20 * 60;
@@ -118,12 +121,10 @@
 
     function startQuiz() {
         userName = document.getElementById('username').value.trim();
-        if(!userName) return alert("Masukkan nama Anda!");
-        
+        if(!userName) return alert("Isi nama dulu ya!");
         startTime = new Date();
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('quiz-screen').classList.remove('hidden');
-        
         startTimer();
         initGrid();
         loadQuestion();
@@ -153,39 +154,31 @@
 
     function loadQuestion() {
         const data = quizData[currentIdx];
-        document.getElementById('progress').innerText = `SOAL NOMOR: ${currentIdx + 1} DARI ${quizData.length}`;
+        document.getElementById('progress').innerText = `SOAL ${currentIdx + 1} / ${quizData.length}`;
         document.getElementById('question-box').innerHTML = data.q;
         
-        // Handle Teks Bacaan (Passage)
+        // Bacaan
         const pBox = document.getElementById('passage-box');
-        if(data.passage) {
-            pBox.innerHTML = data.passage;
-            pBox.classList.remove('hidden');
-        } else {
-            pBox.classList.add('hidden');
-        }
+        if(data.passage) { pBox.innerHTML = data.passage; pBox.classList.remove('hidden'); }
+        else { pBox.classList.add('hidden'); }
 
-        // Handle Gambar
+        // Gambar
         const imgCont = document.getElementById('image-container');
         imgCont.innerHTML = data.image ? `<img src="${data.image}" class="question-image">` : "";
 
-        // Handle Pilihan
+        // Opsi
         const oBox = document.getElementById('options-box');
         oBox.innerHTML = "";
         for(let key in data.options) {
             const btn = document.createElement('button');
             btn.className = 'option' + (userAnswers[currentIdx] === key ? ' selected' : '');
             btn.innerHTML = `<b>${key.toUpperCase()}.</b> ${data.options[key]}`;
-            btn.onclick = () => { 
-                userAnswers[currentIdx] = key; 
-                loadQuestion(); 
-                updateGrid(); 
-            };
+            btn.onclick = () => { userAnswers[currentIdx] = key; loadQuestion(); updateGrid(); };
             oBox.appendChild(btn);
         }
 
         document.getElementById('prev-btn').style.visibility = (currentIdx === 0) ? "hidden" : "visible";
-        document.getElementById('next-btn').innerText = (currentIdx === quizData.length - 1) ? "SELESAI" : "LANJUT";
+        document.getElementById('next-btn').innerText = (currentIdx === quizData.length - 1) ? "KIRIM" : "LANJUT";
         updateGrid();
     }
 
@@ -198,7 +191,7 @@
 
     function nextQuestion() {
         if(currentIdx < quizData.length - 1) { currentIdx++; loadQuestion(); }
-        else { if(confirm("Kirim semua jawaban sekarang?")) showResult(); }
+        else { if(confirm("Kirim jawaban sekarang?")) showResult(); }
     }
 
     function prevQuestion() { if(currentIdx > 0) { currentIdx--; loadQuestion(); } }
@@ -207,7 +200,6 @@
         clearInterval(timerInterval);
         const duration = Math.floor((new Date() - startTime) / 1000);
         const durationText = `${Math.floor(duration/60)}m ${duration%60}s`;
-        
         let score = Math.round((userAnswers.filter((ans, i) => ans === quizData[i].ans).length / quizData.length) * 100);
 
         document.getElementById('quiz-screen').classList.add('hidden');
@@ -221,11 +213,7 @@
             mode: 'no-cors',
             body: JSON.stringify({ name: userName, score: score, duration: durationText })
         }).then(() => {
-            document.getElementById('status-upload').innerText = "✅ Data nilai berhasil disimpan!";
-            document.getElementById('status-upload').style.background = "#d4edda";
-        }).catch(() => {
-            document.getElementById('status-upload').innerText = "❌ Gagal kirim! Hubungi panitia.";
-            document.getElementById('status-upload').style.background = "#f8d7da";
+            document.getElementById('status-upload').innerText = "✅ Berhasil Disimpan!";
         });
     }
 </script>
